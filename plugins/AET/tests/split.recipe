@@ -1,0 +1,4 @@
+jquery: core.js
+jquery: search.js
+jquery: Media.js
+jquery: Dates.js
