@@ -1,6 +1,6 @@
 /***
 |''Name''|AETHtml|
-|''Version''|0.2.3|
+|''Version''|0.2.4|
 |''Requires''|AETPlugin|
 !Usage
 Allows an easy way to copy html into a field.
@@ -14,7 +14,9 @@ Allows an easy way to copy html into a field.
 config.macros.aet.controlTypes.html = function(place, tiddler, field, options) {
 	var preview = $("<div />").addClass("embedPreview").appendTo(place)[0];
 	var container = $("<div />").addClass("embedArea").appendTo(place)[0];
-	$("<input type='hidden' />").attr("edit", field).appendTo(container);
+	var initial = config.macros.aet.getMetaData(tiddler.title, field);
+	wikify(initial, preview);
+	$("<input type='hidden' />").attr("edit", field).val(initial).appendTo(container);
 	var change = function(ev) {
 		var val = $(ev.target).val();
 		var value = "<html>%0</html>".format(val);
