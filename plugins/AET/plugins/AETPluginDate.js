@@ -6,7 +6,7 @@
 |''Author:''|JonRobson |
 |''Comments:''|Please make comments at http://groups.google.co.uk/group/TiddlyWikiDev |
 |''License:''|[[BSD License|http://www.opensource.org/licenses/bsd-license.php]] |
-|''Requires:''|[[AdvancedEditTemplate (core code)|http://svn.tiddlywiki.org/Trunk/contributors/JonRobson/plugins/AET/plugins/AET.js]]|
+|''Source''|https://github.com/jdlrobson/TiddlyWiki/raw/master/plugins/AET/plugins/AETPluginDate.js|
 !Usage
 {{{<<aet type:date field:fieldname>>}}}
 ***/

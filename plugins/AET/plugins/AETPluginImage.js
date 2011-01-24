@@ -1,6 +1,7 @@
 /***
 |''Name''|AETImage|
 |''Requires''|BinaryUploadPlugin ImageMacroPlugin|
+|''Source''|https://github.com/jdlrobson/TiddlyWiki/raw/master/plugins/AET/plugins/AETPluginImage.js|
 |''Version''|0.2.3|
 !Usage
 {{{<<binaryEdit field>>}}}

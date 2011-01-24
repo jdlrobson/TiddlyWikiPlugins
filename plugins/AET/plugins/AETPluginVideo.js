@@ -1,6 +1,8 @@
 /***
+|''Name''|AETPluginVideo|
 |''Version''|0.2.2|
 |''Requires''|AETPlugin|
+|''Source''|https://github.com/jdlrobson/TiddlyWiki/raw/master/plugins/AET/plugins/AETPluginVideo.js|
 !Usage
 Adds video view types and updates AdvancedEditTemplate to provide ways to add them to documents
 {{{

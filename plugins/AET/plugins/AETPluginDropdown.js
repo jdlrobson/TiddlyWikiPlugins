@@ -4,6 +4,7 @@
 |''Author:''|JonRobson|
 |''Version:''|0.8.5|
 |''Requires''|AETPlugin|
+|''Source''|https://github.com/jdlrobson/TiddlyWiki/raw/master/plugins/AET/plugins/AETDropdown.js|
 |''Comments:''|Please make comments at http://groups.google.co.uk/group/TiddlyWikiDev |
 |''License:''|[[BSD License|http://www.opensource.org/licenses/bsd-license.php]] |
 !Usage
