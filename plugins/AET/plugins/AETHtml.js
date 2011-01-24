@@ -11,19 +11,18 @@ Allows an easy way to copy html into a field.
 //{{{
 (function($) {
 
-var html_ext = config.macros.aet.extensions.html = {
-	embedCode: "Please copy and paste the embed code of your video below"
-};
-
 config.macros.aet.controlTypes.html = function(place, tiddler, field, options) {
+	var preview = $("<div />").addClass("embedPreview").appendTo(place)[0];
 	var container = $("<div />").addClass("embedArea").appendTo(place)[0];
-	$("<span />").text(html_ext.embedCode).appendTo(container);
 	$("<input type='hidden' />").attr("edit", field).appendTo(container);
 	var change = function(ev) {
 		var val = $(ev.target).val();
-		config.macros.aet.setMetaData(tiddler.title, field, "<html>%0</html>".format(val));
+		var value = "<html>%0</html>".format(val);
+		config.macros.aet.setMetaData(tiddler.title, field, value);
+		$(preview).empty();
+		wikify(value, preview);
 	};
-	$("<textarea />").attr("edit", field).appendTo(container).change(change);
+	$("<textarea />").appendTo(container).change(change);
 };
 
 }(jQuery));
