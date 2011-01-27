@@ -2,7 +2,7 @@
 |''Name:''|AETPlugin|
 |''Description:''|Provides stuff the standard edit macro doesn't. First things first.. dropdowns!|
 |''Author:''|JonRobson |
-|''Version:''|0.9.0|
+|''Version:''|0.9.1|
 |''Date:''|Jan 2011|
 |''Source''|https://github.com/jdlrobson/TiddlyWiki/raw/master/plugins/AET/plugins/AETPlugin.js|
 |''Comments:''|Please make comments at http://groups.google.co.uk/group/TiddlyWikiDev |
@@ -118,7 +118,7 @@ var aet = config.macros.AdvancedEditTemplate = {
 		options.field = field;
 		var controlHandler = aet.controlTypes[controlType];
 		if(controlHandler) {
-			var container = $("<div />").appendTo(place)[0];
+			var container = $("<span class='editField' />").appendTo(place)[0];
 			controlHandler(container,tiddler,field,options);
 		}
 	},
