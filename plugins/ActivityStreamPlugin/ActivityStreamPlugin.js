@@ -1,6 +1,6 @@
 /***
 |''Name''|ActivityStreamPlugin|
-|''Version''|0.5.1|
+|''Version''|0.5.2|
 |''Description''|Provides a following macro|
 |''Author''|Jon Robson|
 |''Requires''|TiddlySpaceFollowingPlugin|
@@ -431,16 +431,6 @@ config.macros.view.views.maplink = function(value, place, params, wikifier,
 		if(lat && lng) {
 			$("<a />").attr("href", "http://maps.google.com/maps?saddr=%0,%1".format(lat, lng)).text(label).appendTo(place);
 		}
-};
-
-var _display = Story.prototype.displayTiddler;
-Story.prototype.displayTiddler = function(srcElement,title,template,animate,unused,customFields,toggle,animationSrc) {
-	var tiddler = store.getTiddler(title);
-	if(tiddler && tiddler.fields["server.activity"] === "true") {
-		return tiddlyspace.displayServerTiddler(srcElement, tiddler.fields["server.title"], tiddler.fields["server.workspace"]);
-	} else {
-		return _display.apply(this, arguments);
-	}
 };
 
 var _displayS = tiddlyspace.displayServerTiddler;
