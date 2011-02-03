@@ -1,6 +1,6 @@
 /***
 |''Name''|ActivityStreamPlugin|
-|''Version''|0.5.0|
+|''Version''|0.5.1|
 |''Description''|Provides a following macro|
 |''Author''|Jon Robson|
 |''Requires''|TiddlySpaceFollowingPlugin|
@@ -441,6 +441,21 @@ Story.prototype.displayTiddler = function(srcElement,title,template,animate,unus
 	} else {
 		return _display.apply(this, arguments);
 	}
+};
+
+var _displayS = tiddlyspace.displayServerTiddler;
+tiddlyspace.displayServerTiddler = function(src, title, workspace, callback) {
+	var localTitle = tiddlyspace.getLocalTitle(title, workspace);
+	var localTiddler = store.getTiddler(localTitle);
+
+	var _callback = function(src, tiddler) {
+		callback(src, tiddler);
+		if(localTiddler) {
+			tiddler.fields["server.activity"] = "true";
+			tiddler.fields["server.activity.type"] = localTiddler.fields["server.activity.type"];
+		}
+	};
+	return _displayS.apply(this, [ src, title, workspace, _callback ]);
 };
 
 }(jQuery));
