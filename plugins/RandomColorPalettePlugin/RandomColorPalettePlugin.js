@@ -72,7 +72,7 @@ function HSL_TO_RGB(h, s, l) { // h (hue) between 0 and 360, s (saturation) & l 
 			macro.generatePalette(options, true);
 		},
 		optionTypes: {
-			floats: ["hue", "saturation", "darkest", "lightness", "huevariance"]
+			floats: ["hue", "saturation", "darkest", "lightness", "huevariance", "dark", "pale", "light", "mid"]
 		},
 		getOptions: function(paramString) {
 			var args = paramString.parseParams("name", null, true, false, true)[0];
@@ -142,10 +142,12 @@ function HSL_TO_RGB(h, s, l) { // h (hue) between 0 and 360, s (saturation) & l 
 			var palette = macro.getExistingPalette(true);
 			var hue = options.hue || Math.floor(Math.random() * 359);
 			var saturation = options.saturation || macro.generateRandomNumber(0.3, 0.7);
-			var dark = options.darkest || macro.generateRandomNumber(0, 0.10);
-			var pale = options.lightness || macro.generateRandomNumber(0.90, 1);
+			var dark = options.dark || options.darkest || macro.generateRandomNumber(0, 0.10);
+			var pale = options.pale || options.lightness || macro.generateRandomNumber(0.90, 1);
 			var delta = ( ( pale - dark ) / 3 );
-			var lightness_values = {Dark:dark, Mid: dark + delta, Light: dark + (delta * 2), Pale:pale};
+			var mid = options.mid || dark + delta;
+			var light = options.light || dark + (delta * 2);
+			var lightness_values = {Dark: dark, Mid: mid, Light: light, Pale: pale};
 
 			var opposite_hue = (hue + 180) % 360;
 			var seed = options.huevariance || Math.floor((85 * Math.random()) + 5); // we want it to be at least 5 degrees
