@@ -68,8 +68,20 @@ function HSL_TO_RGB(h, s, l) { // h (hue) between 0 and 360, s (saturation) & l 
 		changedPaletteText: "We have assigned you a random theme by adjusting the [[ColorPalette]] tiddler.\nDon't like it? Click <<RandomColorPalette>> for another one.", 
 		handler: function(place, macroName, params, wikifier, paramString, tiddler) {
 			paramString = paramString || "";
-			var options = paramString.parseParams("name", null, true, false, true)[0];
+			var options = macro.getOptions(paramString);
 			macro.generatePalette(options, true);
+		},
+		optionTypes: {
+			floats: ["hue", "saturation", "darkest", "lightness", "huevariance"]
+		},
+		getOptions: function(paramString) {
+			var args = paramString.parseParams("name", null, true, false, true)[0];
+			var options = {};
+			var numbers = macro.optionTypes.floats;
+			for(var i in args) {
+				options[i] = numbers.indexOf(i) > -1 ? parseFloat(args[i][0], 10) : args[i][0];
+			}
+			return options;
 		},
 		generateRandomNumber: function(min, max, info) {
 			var num = (Math.random() * 1);
@@ -126,17 +138,17 @@ function HSL_TO_RGB(h, s, l) { // h (hue) between 0 and 360, s (saturation) & l 
 			}
 		},
 		generatePalette: function(options, save) {
-			var outputRGB = options.rgb && options.rgb[0];
+			var outputRGB = options.rgb;
 			var palette = macro.getExistingPalette(true);
-			var hue = options.hue ? parseInt(options.hue[0]) : Math.floor(Math.random() * 359);
-			var saturation = options.saturation ? parseFloat(options.saturation[0]) : macro.generateRandomNumber(0.3, 0.7);
-			var dark = options.darkest ? parseFloat(options.darkest[0]) : macro.generateRandomNumber(0, 0.10);
-			var pale = options.lightness ? parseFloat(options.lightness[0]) : macro.generateRandomNumber(0.90, 1);
+			var hue = options.hue || Math.floor(Math.random() * 359);
+			var saturation = options.saturation || macro.generateRandomNumber(0.3, 0.7);
+			var dark = options.darkest || macro.generateRandomNumber(0, 0.10);
+			var pale = options.lightness || macro.generateRandomNumber(0.90, 1);
 			var delta = ( ( pale - dark ) / 3 );
 			var lightness_values = {Dark:dark, Mid: dark + delta, Light: dark + (delta * 2), Pale:pale};
 
 			var opposite_hue = (hue + 180) % 360;
-			var seed = options.huevariance ? options.huevariance[0] : Math.floor((85 * Math.random()) + 5); // we want it to be at least 5 degrees
+			var seed = options.huevariance || Math.floor((85 * Math.random()) + 5); // we want it to be at least 5 degrees
 			var huetwo = (opposite_hue + seed) % 360;
 			var huethree = (opposite_hue - seed) % 360;
 			if(huetwo < 0) {
