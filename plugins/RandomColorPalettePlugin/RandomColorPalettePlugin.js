@@ -169,7 +169,7 @@ function HSL_TO_RGB(h, s, l) { // h (hue) between 0 and 360, s (saturation) & l 
 			palette.Background = HSL_TO_RGB(hue, saturation, 0.92);
 			palette.Foreground = HSL_TO_RGB(hue, saturation, 0.08);
 			palette.ColorPaletteParameters = ["HSL([", hue, "|", seed, "], [", saturation, "],",
-				"[", dark, "|", pale, "])"].join("");
+				"[", dark, "|", mid, "|", light, "|", pale, "])"].join("");
 			// construct new ColorPalette
 			var text = ["/*{{{*/\n"];
 			var colorcode;
