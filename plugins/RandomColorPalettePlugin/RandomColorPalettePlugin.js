@@ -221,15 +221,24 @@ function HSL_TO_RGB(h, s, l) { // h (hue) between 0 and 360, s (saturation) & l 
 			}
 		}
 	};
-	config.macros.RandomColorPaletteButton = {
+	var btnMacro = config.macros.RandomColorPaletteButton = {
 			text: "New ColorPalette",
 			tooltip: "Generate a random colour scheme for your TiddlyWiki",
-			handler: function(place, macroName, params, wikifier, paramString, tiddler) {
+			makeButton: function(place, options) {
 				var btnHandler = function(ev) {
-					macro.handler(place, macroName, params, wikifier, paramString, tiddler);
+					var t = $(ev.target);
+					var options = t.data("options");
+					macro.generatePalette(options, true);
+					ev.preventDefault();
 					return false;
 				};
-				createTiddlyButton(place, this.text, this.tooltip, btnHandler);
+				var btn = createTiddlyButton(place, this.text, this.tooltip, btnHandler);
+				$(btn).data("options", options);
+				return btn;
+			},
+			handler: function(place, macroName, params, wikifier, paramString, tiddler) {
+				var options = macro.getOptions(paramString);
+				btnMacro.makeButton(place, options);
 			}
 	};
 })(jQuery);
