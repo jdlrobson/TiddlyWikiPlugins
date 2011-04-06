@@ -20,49 +20,49 @@ More information at http://macros.tiddlyspace.com/#%5B%5BRandomColorPaletteButto
 !Code
 ***/
 //{{{
-(function($){
-	RGB.prototype.toRGBString = function() {
-		return "rgb(%0,%1,%2)".format(parseInt(this.r * 255, 10),
-			parseInt(this.g * 255, 10), parseInt(this.b * 255, 10))
+RGB.prototype.toRGBString = function() {
+	return "rgb(%0,%1,%2)".format(parseInt(this.r * 255, 10),
+		parseInt(this.g * 255, 10), parseInt(this.b * 255, 10))
+}
+function HSL_TO_RGB(h, s, l) { // h (hue) between 0 and 360, s (saturation) & l (lightness) between 0 and 1
+	var c = l <= 0.5 ? 2 * l * s : ( 2 - (2 * l)) * s;
+	var h1 = h / 60;
+	var x = c * (1 - Math.abs((h1 % 2) - 1)); 
+	var r, g, b;
+	if(typeof(h) == 'undefined') {
+		r = 0;
+		g = 0;
+		b = 0;
+	} else if(0 <= h1 && h1 < 1) {
+		r = c;
+		g = x;
+		b = 0;
+	} else if(1 <= h1 && h1 < 2) {
+		r = x;
+		g = c;
+		b = 0;
+	} else if(2 <= h1 && h1 < 3) {
+		r = 0;
+		g = c;
+		b = x;
+	} else if(3 <= h1 && h1 < 4) {
+		r = 0;
+		g = x;
+		b = c;
+	} else if(4 <= h1 && h1 < 5) {
+		r = x;
+		g = 0;
+		b = c;
+	} else if(5 <= h1 && h1 < 6) {
+		r = c;
+		g = 0;
+		b = x;
 	}
-	function HSL_TO_RGB(h, s, l) { // h (hue) between 0 and 360, s (saturation) & l (lightness) between 0 and 1
-		var c = l <= 0.5 ? 2 * l * s : ( 2 - (2 * l)) * s;
-		var h1 = h / 60;
-		var x = c * (1 - Math.abs((h1 % 2) - 1)); 
-		var r, g, b;
-		if(typeof(h) == 'undefined') {
-			r = 0;
-			g = 0;
-			b = 0;
-		} else if(0 <= h1 && h1 < 1) {
-			r = c;
-			g = x;
-			b = 0;
-		} else if(1 <= h1 && h1 < 2) {
-			r = x;
-			g = c;
-			b = 0;
-		} else if(2 <= h1 && h1 < 3) {
-			r = 0;
-			g = c;
-			b = x;
-		} else if(3 <= h1 && h1 < 4) {
-			r = 0;
-			g = x;
-			b = c;
-		} else if(4 <= h1 && h1 < 5) {
-			r = x;
-			g = 0;
-			b = c;
-		} else if(5 <= h1 && h1 < 6) {
-			r = c;
-			g = 0;
-			b = x;
-		}
-		m = l - (0.5 * c);
-		return new RGB(r + m, g + m, b + m);
-	}
+	m = l - (0.5 * c);
+	return new RGB(r + m, g + m, b + m);
+}
 
+(function($){
 	var macro = config.macros.RandomColorPalette = {
 		messagesOn: false, 
 		changedPaletteText: "We have assigned you a random theme by adjusting the [[ColorPalette]] tiddler.\nDon't like it? Click <<RandomColorPalette>> for another one.", 
