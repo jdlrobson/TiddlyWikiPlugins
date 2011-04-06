@@ -2,9 +2,9 @@
 |''Name''|RandomColorPalettePlugin|
 |''Description''|Adds a random color palette to TiddlyWiki|
 |''Author''|Jon Robson|
-|''Version''|1.3.0|
+|''Version''|1.3.2|
 |''Status''|stable|
-|''Source''|http://svn.tiddlywiki.org/Trunk/contributors/JonRobson/plugins/RandomColorPalettePlugin/RandomColorPalettePlugin.js|
+|''Source''|https://github.com/jdlrobson/TiddlyWikiPlugins/raw/master/plugins/RandomColorPalettePlugin/RandomColorPalettePlugin.js|
 |''License''|[[BSD|http://www.opensource.org/licenses/bsd-license.php]]|
 !Usage
 {{{
