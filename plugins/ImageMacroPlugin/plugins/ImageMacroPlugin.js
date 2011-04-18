@@ -396,7 +396,7 @@ merge(config.macros.view.views, {
 });
 config.shadowTiddlers.StyleSheetImageMacro = [".wikifiedImage svg, .wikifiedImage .image { width: 80%; }",
 	".svgImageText { background-color:[[ColorPalette::Error]]; color:#ddd; display: inline-block; }",
-	"span.svgImageText { display: inline-block; overflow-hidden; }"
+	"span.svgImageText { display: inline-block; overflow: hidden; }"
 ].join("");
 store.addNotification("StyleSheetImageMacro", refreshStyles);
 
