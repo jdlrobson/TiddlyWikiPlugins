@@ -1,6 +1,6 @@
 /***
 |''Name''|ImageMacroPlugin|
-|''Version''|0.9.31|
+|''Version''|0.9.4|
 |''Description''|Allows the rendering of svg images in a TiddlyWiki|
 |''Author''|Osmosoft|
 |''License''|[[BSD|http://www.opensource.org/licenses/bsd-license.php]]|
@@ -58,7 +58,9 @@ var macro = config.macros.image = {
 		}
 		var data = new Image();
 		data.onload = function() {
+			// note ie 8 only supports data uris up to 32k so cannot be relied on
 			macro.supportsDataUris = this.width != 1 || this.height != 1 ? false : true;
+			macro.supportsDataUris = macro.ieVersion && macro.ieVersion < 9 ? false : macro.supportsDataUris;
 		};
 		data.onerror = data.onload;
 		data.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
