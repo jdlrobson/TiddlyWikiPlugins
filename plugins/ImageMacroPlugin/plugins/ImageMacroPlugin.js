@@ -146,9 +146,9 @@ var macro = config.macros.image = {
 	_renderBinaryImageTiddler: function(place, tiddler, options) {
 		var resourceURI;
 		var fields = tiddler.fields;
-		if(fields["server.type"] == "tiddlyweb") { // construct an accurate url for the resource	
+		if(fields["server.type"] == "tiddlyweb") { // construct an accurate url for the resource
 			resourceURI = "%0/%1/tiddlers/%2".format(config.defaultCustomFields["server.host"],
-				fields["server.workspace"], fields["server.title"]);
+				fields["server.workspace"], encodeURI(fields["server.title"]));
 		} else { // guess the url for the resource
 			resourceURI = tiddler.title;
 		}
