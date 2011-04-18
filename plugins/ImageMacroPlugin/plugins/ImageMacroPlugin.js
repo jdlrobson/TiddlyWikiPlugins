@@ -390,8 +390,8 @@ merge(config.macros.view.views, {
 	image: function(value, place, params, wikifier, paramString, tiddler) {
 		// a field can point to another tiddler whereas text is the current tiddler.
 		var title = params[0] == "text" ? tiddler.title : value;
-		paramString = '"%0" %1'.format(title, params.splice(2).join(" "))
-		invokeMacro(place, "image", paramString, null, tiddler);
+		var args = macro.getArguments(paramString, params);
+		macro.renderImage(place, title, args);
 	}
 });
 config.shadowTiddlers.StyleSheetImageMacro = [".wikifiedImage svg, .wikifiedImage .image { width: 80%; }",
