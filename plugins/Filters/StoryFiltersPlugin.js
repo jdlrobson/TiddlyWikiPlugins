@@ -3,6 +3,7 @@
 |''Author''|Jon Robson|
 |''Version''|0.6.7|
 |''Status''|@@experimental@@|
+|''Source''|https://raw.github.com/jdlrobson/TiddlyWikiPlugins/master/plugins/Filters/StoryFiltersPlugin.js|
 |''License''|[[BSD|http://www.opensource.org/licenses/bsd-license.php]]|
 !Notes
 Adds the following filters
