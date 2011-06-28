@@ -2,7 +2,7 @@
 |''Name''|TiddlySpaceInstaller|
 |''Version''|0.3.15|
 |''Requires''|GUID|
-|''Source''|https://github.com/jdlrobson/TiddlyWiki/raw/master/plugins/TiddlySpaceInstaller/TiddlySpaceInstaller.js|
+|''Source''|https://github.com/jdlrobson/TiddlyWikiPlugins/raw/master/plugins/TiddlySpaceInstaller/TiddlySpaceInstaller.js|
 !Usage
 {{{<<showInstall bar Foo>>}}}
 Opens the tiddler Foo to visitors of the bar space. 
