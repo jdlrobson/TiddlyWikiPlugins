@@ -182,5 +182,34 @@ var macro = config.macros.install = {
 	}
 };
 
+var p = config.paramifiers.addMember = {
+	onstart: function(members) {
+		var space = config.extensions.tiddlyspace.currentSpace.name;
+		var host = config.extensions.tiddlyweb.host;
+		space = new tiddlyweb.Space(space, host); // XXX: singleton
+		p.add(space, members.split(","));
+	},
+	add: function(space, members) {
+		var _dirty = story.isDirty();
+		for(var i = 0; i < members.length; i++) {
+			var username = members[i];
+			space.members().add(username, function(){
+				story.setDirty(false);
+			}, function(){
+				story.setDirty(false);
+			});
+		}
+	}
+};
+var p2 = config.paramifiers.privacyMode = {
+	onstart: function(mode) {
+		if(mode == 'private') {
+			config.options.chkPrivateMode = true;
+			store.getTiddler("SystemSettings").fields['server.page.revision'] = 'false';
+			saveSystemSetting("chkPrivateMode", true);
+		}
+	}
+};
+
 })(jQuery);
 //}}}
