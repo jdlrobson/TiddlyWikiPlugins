@@ -128,6 +128,35 @@ var macro = config.macros.install = {
 			}
 		});
 	},
+	updateUserMessage: function(form, code, keephidden) {
+		var locale = macro.locale;
+		var container = form.parentNode;
+		var username = $("[name='username']", form).text();
+		var msg = "";
+		switch(code) {
+			case 1:
+				msg = "Please enter a website address";
+				break;
+			case 2:
+				msg = locale.passwordError;
+				break;
+			case 3:
+				msg = locale.choiceError;
+				break;
+			case 4:
+				msg = "Installing your new space...";
+				break;
+			case 5:
+				msg = macro.locale.nameError.format(username);
+				break;
+			case 6:
+				msg = macro.locale.spaceCreationError.format(username);
+		}
+		$(".messageArea", container).text(msg).show();
+		if(!keephidden) {
+			$(form).show();
+		}
+	},
 	generatePassword: function() {
 		var guid = config.extensions.GuidPlugin;
 		return guid ? guid.guid.generate() + "_" + guid.guid.generate() :
