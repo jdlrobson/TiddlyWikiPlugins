@@ -1,8 +1,8 @@
 /***
 |''Name''|TiddlySpaceInstaller|
-|''Version''|0.3.15|
+|''Version''|0.5.2|
 |''Requires''|GUID|
-|''Source''|https://github.com/jdlrobson/TiddlyWikiPlugins/raw/master/plugins/TiddlySpaceInstaller/TiddlySpaceInstaller.js|
+|''Source''|https://github.com/jdlrobson/TiddlyWiki/raw/master/plugins/TiddlySpaceInstaller/TiddlySpaceInstaller.js|
 !Usage
 {{{<<showInstall bar Foo>>}}}
 Opens the tiddler Foo to visitors of the bar space. 
@@ -13,6 +13,15 @@ Provides a ui for installing a space that includes foo and bar taking into accou
 optional parameters:
 * label - change the label of the button that is clicked to install.
 * header - provide alternative text to show for "choose a website address"
+* choice - allow a user to install a choice of various spaces
+* choiceLabel - control the label presents for each space that is installable
+* privateSpace - specifies that the newly created space should be private.
+* addMember - specifies that a certain member should be added to the created space - note multiple members can be added to a new space
+e.g.
+{{{
+<<install choice:foo choiceLabel:'install foo' choice:bar choiceLabel:'install bar'>>
+}}}
+provides an interface to install foo or bar space.
 ***/
 //{{{
 (function($) {
@@ -119,6 +128,7 @@ var macro = config.macros.install = {
 			}
 		}
 		$("<input />").addClass("installButton").attr("type", "submit").val(options.setupLabel).appendTo(form);
+		options.formEl = form;
 		$("<div />").addClass("messageArea annotation").hide().prependTo(form.parentNode);
 		$(form).submit(function(ev) {
 			ev.preventDefault();
