@@ -119,6 +119,7 @@ var macro = config.macros.install = {
 			}
 		}
 		$("<input />").addClass("installButton").attr("type", "submit").val(options.setupLabel).appendTo(form);
+		$("<div />").addClass("messageArea annotation").hide().prependTo(form.parentNode);
 		$(form).submit(function(ev) {
 			ev.preventDefault();
 			var paramifier = [];
