@@ -154,13 +154,13 @@ var macro = config.macros.install = {
 				pass = macro.generatePassword();
 				macro.installNewUser(user, pass, includes, options);
 			} else if(userInfo.anon && pass != pass2) {
-				alert(locale.passwordError);
+				macro.updateUserMessage(form, 2);
 			} else if(userInfo.anon && user && pass == pass2) {
 				macro.installNewUser(user, pass, includes, options);
 			} else if(!userInfo.anon && user) {
 				macro.setup(user, includes, options)
 			} else {
-				alert("Please enter a website address");
+				macro.updateUserMessage(form, 1);
 			}
 		});
 	},
@@ -208,7 +208,8 @@ var macro = config.macros.install = {
 				});
 			},
 			function() {
-				alert(macro.locale.nameError.format(username));
+				macro.updateUserMessage(options.formEl, 5);
+				$(options.formEl).show();
 			}
 		);
 	},
@@ -246,7 +247,7 @@ var macro = config.macros.install = {
 					}
 				});
 			}, function() {
-				alert(macro.locale.spaceCreationError.format(spacename));
+				macro.updateUserMessage(options.formEl, 6);
 			});
 		});
 	}
