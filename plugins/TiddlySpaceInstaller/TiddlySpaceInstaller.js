@@ -39,7 +39,8 @@ var macro = config.macros.install = {
 		loginRequired: "You must be logged in to use this.",
 		inputLabel: {
 			choice: "Select a space to install:"
-		}
+		},
+		choiceError: "No space has been selected to be installed."
 	},
 	handler: function(place, macroName, params, wikifier, paramString, tiddler) {
 		var args = paramString.parseParams("anon")[0];
