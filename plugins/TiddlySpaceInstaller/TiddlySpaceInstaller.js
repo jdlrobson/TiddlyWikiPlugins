@@ -53,7 +53,8 @@ var macro = config.macros.install = {
 			inputs: args.input ? args.input : [],
 			paramifierName: args.pname ? args.pname[0] : "install",
 			choices: args.choice,
-			choiceLabels: args.choiceLabel
+			choiceLabels: args.choiceLabel,
+			addMember: args.addMember ? args.addMember.join(",") : false
 		};
 		tweb.getStatus(function(r) {
 			options.identity = tweb.status.identity;
@@ -219,6 +220,9 @@ var macro = config.macros.install = {
 			}
 			if(options.paramifier) {
 				newLocation += "%0:[[%1]]".format(options.paramifierName, options.paramifier);
+			}
+			if(options.addMember) {
+				newLocation += "addMember:[[%0]]".format(options.addMember);
 			}
 
 			space.create(function() {
