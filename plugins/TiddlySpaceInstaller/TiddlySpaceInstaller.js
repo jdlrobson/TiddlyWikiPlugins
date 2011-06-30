@@ -54,6 +54,7 @@ var macro = config.macros.install = {
 			paramifierName: args.pname ? args.pname[0] : "install",
 			choices: args.choice,
 			choiceLabels: args.choiceLabel,
+			privateSpace: args.privateSpace ? true : false,
 			addMember: args.addMember ? args.addMember.join(",") : false
 		};
 		tweb.getStatus(function(r) {
@@ -224,7 +225,9 @@ var macro = config.macros.install = {
 			if(options.addMember) {
 				newLocation += "addMember:[[%0]]".format(options.addMember);
 			}
-
+			if(options.privateSpace) {
+				newLocation += "privacyMode:[[private]]";
+			}
 			space.create(function() {
 				$.ajax({
 					url: tweb.host + "/spaces/"+ spacename,
