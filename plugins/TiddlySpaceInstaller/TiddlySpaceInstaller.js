@@ -37,7 +37,9 @@ var macro = config.macros.install = {
 		passwordError: "your passwords do not match.. please try entering them again.",
 		nameError: "The name %0 is taken or is invalid. Please try another.",
 		loginRequired: "You must be logged in to use this.",
-		inputLabel: {}
+		inputLabel: {
+			choice: "Select a space to install:"
+		}
 	},
 	handler: function(place, macroName, params, wikifier, paramString, tiddler) {
 		var args = paramString.parseParams("anon")[0];
@@ -49,7 +51,9 @@ var macro = config.macros.install = {
 			setupLabel: args.label ? args.label[0] : locale.setup,
 			loginTiddler: args.loginTiddler ? args.loginTiddler[0] : false,
 			inputs: args.input ? args.input : [],
-			paramifierName: args.pname ? args.pname[0] : "install"
+			paramifierName: args.pname ? args.pname[0] : "install",
+			choices: args.choice,
+			choiceLabels: args.choiceLabel
 		};
 		tweb.getStatus(function(r) {
 			options.identity = tweb.status.identity;
@@ -98,6 +102,19 @@ var macro = config.macros.install = {
 				$("<input />").addClass("input optInput").attr("input", "user").attr("name", name).appendTo(form);
 			}
 		}
+		if(options.choices) {
+			var labels = options.choiceLabels || [];
+			$("<div />").addClass("inputLabel optInputLabel").text(locale.inputLabel.choice).appendTo(form);
+			for(var i = 0; i < options.choices.length; i++) {
+				var choice = options.choices[i];
+				var radio = $("<input type='radio' />").addClass("input optInput choice").attr("name", "choice").val(choice).appendTo(form)[0];
+				if(i === 0) {
+					$(radio).attr("checked", true);
+				}
+				var label = labels[i] ? labels[i] : choice;
+				$("<span />").text(label).appendTo(form);
+			}
+		}
 		$("<input />").addClass("installButton").attr("type", "submit").val(options.setupLabel).appendTo(form);
 		$(form).submit(function(ev) {
 			ev.preventDefault();
@@ -114,15 +131,30 @@ var macro = config.macros.install = {
 			var pass = $("[name=pass1]", ev.target).val();
 			var pass2 = $("[name=pass2]", ev.target).val();
 			options.paramifier = paramifier;
+			var choices = $("[name=choice]", form);
+			var includes = options.includeSpaces;
+			if(choices.length > 0) {
+				includes = [];
+				var space = $("[name=choice]:checked").val();
+				if(space) {
+					includes.push(space);
+				}
+			}
+			if(includes.length === 0) {
+				macro.updateUserMessage(form, 3);
+				return;
+			}
+			$(form).hide();
+			macro.updateUserMessage(form, 4, true);
 			if(userInfo.anon && identity) {
 				pass = macro.generatePassword();
-				macro.installNewUser(user, pass, options.includeSpaces, options);
+				macro.installNewUser(user, pass, includes, options);
 			} else if(userInfo.anon && pass != pass2) {
 				alert(locale.passwordError);
 			} else if(userInfo.anon && user && pass == pass2) {
-				macro.installNewUser(user, pass, options.includeSpaces, options);
+				macro.installNewUser(user, pass, includes, options);
 			} else if(!userInfo.anon && user) {
-				macro.setup(user, options.includeSpaces, options)
+				macro.setup(user, includes, options)
 			} else {
 				alert("Please enter a website address");
 			}
