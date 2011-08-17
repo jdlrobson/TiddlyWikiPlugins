@@ -1,7 +1,7 @@
 /***
 |''Name''|LoadMissingTiddlersPlugin|
 |''Status''|Experimental|
-|''Version''|0.5.6|
+|''Version''|0.5.7|
 !About
 This updates your TiddlySpace when confronted with a missing tiddler to look at other known sources for that information.
 Hacks the open paramifier to open regardless of whether tiddler exists locally.
@@ -15,7 +15,9 @@ config.paramifiers.open = {
 	}
 };
 
-config.shadowTiddlers.TiddlySpaceFloorboards = ["%0_public", "%0_archive", "glossary_public"].join("\n");
+if(typeof(config.shadowTiddlers.TiddlySpaceFloorboards) === "undefined") {
+	config.shadowTiddlers.TiddlySpaceFloorboards = ["%0_public", "%0_archive", "glossary_public"].join("\n");
+}
 config.floorboards = store.getTiddlerText("TiddlySpaceFloorboards").split("\n");
 
 var ext = config.extensions.LoadMissingTiddlers = {
