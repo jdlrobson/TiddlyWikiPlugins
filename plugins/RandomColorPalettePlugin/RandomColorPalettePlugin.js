@@ -2,7 +2,7 @@
 |''Name''|RandomColorPalettePlugin|
 |''Description''|Adds a random color palette to TiddlyWiki|
 |''Author''|Jon Robson|
-|''Version''|1.3.2|
+|''Version''|1.4.0|
 |''Status''|stable|
 |''Source''|https://github.com/jdlrobson/TiddlyWikiPlugins/raw/master/plugins/RandomColorPalettePlugin/RandomColorPalettePlugin.js|
 |''License''|[[BSD|http://www.opensource.org/licenses/bsd-license.php]]|
@@ -72,7 +72,9 @@ function HSL_TO_RGB(h, s, l) { // h (hue) between 0 and 360, s (saturation) & l 
 			macro.generatePalette(options, true);
 		},
 		optionTypes: {
-			floats: ["hue", "saturation", "darkest", "lightness", "huevariance", "dark", "pale", "light", "mid"]
+			floats: ["hue", "saturation", "darkest", "lightness", "huevariance", "dark", "pale", "light", "mid",
+				"saturation_light", "saturation_pale", "saturation_mid", "saturation_dark"
+			]
 		},
 		getOptions: function(paramString) {
 			var args = paramString.parseParams("name", null, true, false, true)[0];
@@ -148,6 +150,12 @@ function HSL_TO_RGB(h, s, l) { // h (hue) between 0 and 360, s (saturation) & l 
 			var mid = options.mid || dark + delta;
 			var light = options.light || dark + (delta * 2);
 			var lightness_values = {Dark: dark, Mid: mid, Light: light, Pale: pale};
+			var saturation_values = {};
+			for(i in lightness_values) {
+				if(true) {
+					saturation_values[i] = options["saturation_" + i.toLowerCase()] || saturation;
+				}
+			}
 
 			var opposite_hue = (hue + 180) % 360;
 			var seed = options.huevariance || Math.floor((85 * Math.random()) + 5); // we want it to be at least 5 degrees
@@ -161,6 +169,7 @@ function HSL_TO_RGB(h, s, l) { // h (hue) between 0 and 360, s (saturation) & l 
 			}
 			for(var j in lightness_values) {
 				if(true) {
+					var saturation = saturation_values[j];
 					palette["Primary" + j] = HSL_TO_RGB(hue, saturation, lightness_values[j]);
 					palette["Secondary" + j] = HSL_TO_RGB(huetwo, saturation, lightness_values[j]);
 					palette["Tertiary" + j] = HSL_TO_RGB(huethree, saturation, lightness_values[j]);
@@ -168,7 +177,8 @@ function HSL_TO_RGB(h, s, l) { // h (hue) between 0 and 360, s (saturation) & l 
 			}
 			palette.Background = HSL_TO_RGB(hue, saturation, 0.92);
 			palette.Foreground = HSL_TO_RGB(hue, saturation, 0.08);
-			palette.ColorPaletteParameters = ["HSL([", hue, "|", seed, "], [", saturation, "],",
+			palette.ColorPaletteParameters = ["HSL([", hue, "|", seed, "], [", saturation_values.Pale, "|",
+				saturation_values.Light, "|", saturation_values.Mid, "|", saturation_values.Dark, "],",
 				"[", dark, "|", mid, "|", light, "|", pale, "])"].join("");
 			// construct new ColorPalette
 			var text = ["/*{{{*/\n"];
