@@ -1,0 +1,49 @@
+<html>
+<body>
+	<div id="container"></div>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="Date.js"></script>
+	<script type="text/javascript" src="Strings.js"></script>
+	<script type="text/javascript" src="importr.js"></script>
+	<script type="text/javascript">
+	var bag = window.location.hostname.split(".")[0] + "_public";
+	var importer = ImportWizard("/reflector?uri=%0", function(tid, callback) {
+		$.ajax({
+			type: "PUT",
+			contentType: "application/json",
+			data: JSON.stringify(tid),
+			url: "/bags/" + bag + "/tiddlers/" + encodeURIComponent(tid.title),
+			success: callback,
+			error: callback
+		});
+	});
+	function nodeToJson(node)
+	{
+		var text;
+		if(node.getAttribute("tiddler")) {
+			text = $(node).text().unescapeLineBreaks();
+		}
+		var title = $(node).attr("title");
+		var creator = node.getAttribute("creator");
+		var modifier = node.getAttribute("modifier");
+		var c = node.getAttribute("created");
+		var m = node.getAttribute("modified");
+		var created = c ? Date.convertFromYYYYMMDDHHMMSS(c) : version.date;
+		var modified = m ? Date.convertFromYYYYMMDDHHMMSS(m) : created;
+		var tags = node.getAttribute("tags");
+		var fields = {};
+		var attrs = node.attributes;
+		for(var i = attrs.length-1; i >= 0; i--) {
+			var name = attrs[i].name;
+			if(["created", "modified", "title", "created", "tags"].indexOf(name) === -1) {
+				fields[name] = attrs[i].value.unescapeLineBreaks();
+			}
+		}
+		return { title: title, text: text, modifier: modifier,
+			creator: creator, tags: tags, fields: fields };
+		return tiddler;
+	};
+	new WizardMaker($("#container")[0], importer, nodeToJSON);
+	</script>
+</body>
+</html>
