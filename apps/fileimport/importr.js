@@ -1,7 +1,7 @@
 var ImportWizard, WizardMaker;
 
 (function($) {
-WizardMaker = function(place, wizard) {
+window.WizardMaker = function(place, wizard) {
 	var steps = wizard[0];
 	var options = wizard[1] || {};
 	$("<h1 />").text(options.heading || "Wizard").appendTo(place);
@@ -55,8 +55,8 @@ WizardMaker.prototype = {
 	}
 };
 
-if (window.File && window.FileReader && window.FileList && window.Blob) {
-	ImportWizard = function(options) {
+if(window.FileReader) {
+	window.ImportWizard = function(options) {
 		var proxy = options.proxy, saveFunction = options.save,
 			internalizeTiddler = options.internalizeTiddler, proxyType = options.proxyType || "GET";
 		return [
@@ -99,7 +99,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
 					$("button", body).click(function(ev) {
 						var url = proxy.replace("%0", $("input", body).val())
-						$.ajax({
+						ajaxReq({
 							type: options.proxyType,
 							url: url,
 							success: function(html) {
