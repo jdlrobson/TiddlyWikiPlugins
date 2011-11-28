@@ -1,0 +1,5 @@
+This plugin has been written such that it could be used outside of TiddlyWiki
+
+If you want a TiddlyWiki plugin:
+run make twplugin
+This will spit out FileImportr.js which can be added to a TiddlyWiki
