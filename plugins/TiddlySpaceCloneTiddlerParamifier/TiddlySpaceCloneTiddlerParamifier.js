@@ -92,6 +92,7 @@ var p = config.paramifiers.clone = {
 				}
 				tiddler.modified = new Date();
 				tiddler.fields["server.workspace"] = config.defaultCustomFields["server.workspace"];
+				tiddler.fields["_original_tiddler_title"] = data.title;
 				tiddler.fields["_original_tiddler_source"] = data.bag;
 				tiddler.fields["_original_tiddler_revision"] = data.revision;
 				tiddler = morph ? morph(tiddler) : tiddler;
