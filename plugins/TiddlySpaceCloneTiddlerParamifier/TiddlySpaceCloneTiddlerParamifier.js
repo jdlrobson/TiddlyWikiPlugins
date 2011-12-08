@@ -46,11 +46,14 @@ var flick = config.commands.flickTiddler = {
 	handler: function(ev, src, title) {
 		var tiddler = store.getTiddler(title);
 		var bag = tiddler.fields["server.bag"];
-		if(tiddler && bag) {
+		var revision = tiddler.fields["server.page.revision"];
+		if(tiddler && bag && revision) {
 			tweb.getStatus(function(status) {
 				originMacro.prompt(ev, flick.tooltip, function(ev, space) {
 					var uri = tiddlyspace.getHost(status.server_host, space);
-					window.open("%0#clone:[[bags/%1/tiddlers/%2]]".format(uri, bag, title));
+					var fullUri = "%0#clone:[[bags/%1/tiddlers/%2/revisions/%3]]".
+						format(uri, bag, title, revision);
+					window.open(fullUri);
 				}, {});
 			});
 		}
