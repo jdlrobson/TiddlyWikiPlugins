@@ -20,12 +20,16 @@ merge(config.macros.tiddlerOrigin, {
 				ev.stopPropagation();
 			}
 		});
-		$("<div />").addClass("message").text(msg).appendTo(popup);
-		var input = $('<input type="text"/>').appendTo(popup).focus();
-		$("<button />").addClass("button").text(options.okLabel || "ok").appendTo(popup).
-			click(function(ev) {
-				callback(ev, input.val());
-			});
+		var form = $("<form />").appendTo(popup);
+		$("<div />").addClass("message").text(msg).appendTo(form);
+		var input = $('<input type="text"/>').appendTo(form).focus()[0];
+		var submitForm = function(ev) {
+			callback(ev, $(input).val());
+			return false;
+		};
+		form.submit(submitForm);
+		$("<button />").addClass("button").text(options.okLabel || "ok").appendTo(form).
+			click(submitForm);
 
 		Popup.show();
 		ev.stopPropagation();
