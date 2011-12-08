@@ -1,7 +1,7 @@
 /***
 |''Name''|TiddlySpaceCloneTiddlerCommand|
-|''Version''|0.5.5|
-|''Status''|@@dev@@|
+|''Version''|0.5.8|
+|''Status''|@@experimental@@|
 |''Requires''|TiddlySpaceConfig TiddlySpaceTiddlerIconsPlugin TiddlySpacePublishingCommands|
 !Code
 ***/
@@ -75,6 +75,8 @@ var p = config.paramifiers.clone = {
 				delete tiddler.fields["server.page.revision"];
 				tiddler.modified = new Date();
 				tiddler.fields["server.workspace"] = config.defaultCustomFields["server.workspace"];
+				tiddler.fields["_original_tiddler_source"] = data.bag;
+				tiddler.fields["_original_tiddler_revision"] = data.revision;
 				tiddler = morph ? morph(tiddler) : tiddler;
 				store.addTiddler(tiddler);
 				story.displayTiddler(null,tiddler, DEFAULT_EDIT_TEMPLATE);
