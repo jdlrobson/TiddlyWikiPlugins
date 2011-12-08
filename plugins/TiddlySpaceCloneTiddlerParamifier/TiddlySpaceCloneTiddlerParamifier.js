@@ -1,6 +1,6 @@
 /***
 |''Name''|TiddlySpaceCloneTiddlerCommand|
-|''Version''|0.5.9|
+|''Version''|0.6.0|
 |''Status''|@@experimental@@|
 |''Requires''|TiddlySpaceConfig TiddlySpaceTiddlerIconsPlugin TiddlySpacePublishingCommands|
 !Code
@@ -103,6 +103,15 @@ var p = config.paramifiers.clone = {
 		});
 	}
 };
+
+var toolbar = store.getTiddlerText("ToolbarCommands");
+if(toolbar.indexOf("flickTiddler") === -1) {
+	var slice = store.getTiddlerText("ToolbarCommands::ViewToolbar");
+	var newslice = slice.replace("> ", "> flickTiddler pushTiddler ");
+	var tid = store.getTiddler("ToolbarCommands");
+	tid.text = toolbar.replace(slice, newslice);
+	store.addTiddler(tid);
+}
 
 })(jQuery);
 //}}}
