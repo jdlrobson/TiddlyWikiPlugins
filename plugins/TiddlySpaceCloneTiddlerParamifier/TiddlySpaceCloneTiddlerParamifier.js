@@ -70,9 +70,12 @@ var p = config.paramifiers.clone = {
 			url: url,
 			success: function(data) {
 				var tiddler = config.adaptors.tiddlyweb.toTiddler(data, config.defaultCustomFields['server.host']);
-				delete tiddler.fields["server.bag"];
-				delete tiddler.fields["server.permissions"];
-				delete tiddler.fields["server.page.revision"];
+				var space = tiddlyspace.resolveSpaceName(tiddler.fields["server.bag"]);
+				if(space != tiddlyspace.currentSpace.name) { // ALLOW SAVING IN SAME SPACE (TODO: what is correct behaviour here)
+					delete tiddler.fields["server.bag"];
+					delete tiddler.fields["server.permissions"];
+					delete tiddler.fields["server.page.revision"];
+				}
 				tiddler.modified = new Date();
 				tiddler.fields["server.workspace"] = config.defaultCustomFields["server.workspace"];
 				tiddler.fields["_original_tiddler_source"] = data.bag;
