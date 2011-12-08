@@ -65,11 +65,6 @@ var p = config.paramifiers.clone = {
 		p.clone(url);
 	},
 	clone: function(url, morph) {
-		var p = url.split("/");
-		var bag = p[1];
-		var context = {
-			workspace: p[0] + "/" + bag
-		};
 		ajaxReq({
 			dataType: "json",
 			url: url,
