@@ -80,6 +80,7 @@ var p = config.paramifiers.clone = {
 				tiddler = morph ? morph(tiddler) : tiddler;
 				store.addTiddler(tiddler);
 				story.displayTiddler(null,tiddler, DEFAULT_EDIT_TEMPLATE);
+				window.location.hash = "";
 			}
 		});
 	}
