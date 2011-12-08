@@ -51,6 +51,43 @@ var push = config.commands.pushTiddler = {
 	}
 };
 
+function review() {
+	alert("Not yet!");
+}
+
+var pull = config.commands.pullTiddlers = {
+	text: "pull tiddlers",
+	tooltip: "Find tiddlers that have made alterations to this tiddler",
+	isEnabled: function(tiddler) {
+		return !readOnly
+	},
+	handler: function(ev, src, title) {
+		originMacro.alert(ev, "Please wait...");
+		var list = $("<ul />")[0];
+		$.ajax({
+			url: '/search?q=_original_tiddler_title:"' + title + '" AND _push:yes',
+			dataType: "json",
+			success: function(tiddlers) {
+				for(var i = 0; i < tiddlers.length; i++) {
+					var item = $("<li />").text(tiddlers[i].title).appendTo(list)[0];
+					$("<button class='button' />").click(review).text("review").appendTo(item);
+				}
+				if(tiddlers.length === 0) {
+					$("<li />").text("No outstanding pull requests").appendTo(item);
+				}
+				//TODO: alert should probably allow a dom element as second argument
+				var popup = Popup.create(ev.target);
+				$(popup).addClass("confirmationPopup alert");
+				var container = $("<div />").addClass("message").
+					text("The following tiddlers have requested a review:").appendTo(popup)[0];
+				$(list).appendTo(container);
+				Popup.show();
+			}
+		});
+		originMacro.alert(ev, "Searching for pull requests...");
+	}
+};
+
 var flick = config.commands.flickTiddler = {
 	text: "flick tiddler",
 	tooltip: "Flick this tiddler to another public space",
@@ -107,7 +144,7 @@ var p = config.paramifiers.clone = {
 var toolbar = store.getTiddlerText("ToolbarCommands");
 if(toolbar.indexOf("flickTiddler") === -1) {
 	var slice = store.getTiddlerText("ToolbarCommands::ViewToolbar");
-	var newslice = slice.replace("> ", "> flickTiddler pushTiddler ");
+	var newslice = slice.replace("> ", "> flickTiddler pushTiddler pullTiddlers ");
 	var tid = store.getTiddler("ToolbarCommands");
 	tid.text = toolbar.replace(slice, newslice);
 	store.addTiddler(tid);
