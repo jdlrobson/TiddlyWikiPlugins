@@ -1,6 +1,6 @@
 /***
 |''Name''|TiddlySpaceCloneTiddlerCommand|
-|''Version''|0.5.8|
+|''Version''|0.5.9|
 |''Status''|@@experimental@@|
 |''Requires''|TiddlySpaceConfig TiddlySpaceTiddlerIconsPlugin TiddlySpacePublishingCommands|
 !Code
@@ -68,8 +68,8 @@ var p = config.paramifiers.clone = {
 		ajaxReq({
 			dataType: "json",
 			url: url,
-			success: function(tiddler) {
-				tiddler = config.adaptors.tiddlyweb.toTiddler(tiddler, config.defaultCustomFields['server.host']);
+			success: function(data) {
+				var tiddler = config.adaptors.tiddlyweb.toTiddler(data, config.defaultCustomFields['server.host']);
 				delete tiddler.fields["server.bag"];
 				delete tiddler.fields["server.permissions"];
 				delete tiddler.fields["server.page.revision"];
