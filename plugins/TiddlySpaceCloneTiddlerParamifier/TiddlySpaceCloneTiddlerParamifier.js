@@ -37,6 +37,20 @@ merge(config.macros.tiddlerOrigin, {
 });
 var originMacro = config.macros.tiddlerOrigin;
 
+var push = config.commands.pushTiddler = {
+	text: "push tiddler",
+	tooltip: "Inform the originating tiddler that you have made changes to this tiddler",
+	isEnabled: function(tiddler) {
+		return tiddler.fields._original_tiddler_source &&
+			tiddler.fields._original_tiddler_revision && !tiddler.fields._push;
+	},
+	handler: function(ev, src, title) {
+		var tiddler = store.getTiddler(title);
+		tiddler.fields._push = "yes";
+		autoSaveChanges(null, [ store.saveTiddler(tiddler) ]);
+	}
+};
+
 var flick = config.commands.flickTiddler = {
 	text: "flick tiddler",
 	tooltip: "Flick this tiddler to another public space",
