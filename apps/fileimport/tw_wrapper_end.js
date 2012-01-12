@@ -18,7 +18,8 @@ if(window.ImportWizard) {
 		merge(tid.fields, config.defaultCustomFields);
 		delete tid.fields["server.page.revision"];
 		delete tid.fields["server.etag"];
-		tid = store.saveTiddler(tid);
+		tid = store.saveTiddler(tid.title, tid.title, tid.text,
+			tid.modifier, tid.modified, tid.tags, tid.fields, null, tid.created, tid.creator);
 		autoSaveChanges(null, [tid]);
 		callback();
 	}, internalizeTiddler: internalizer, proxyType: proxyType });
