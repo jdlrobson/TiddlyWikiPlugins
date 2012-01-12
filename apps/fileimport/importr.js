@@ -168,8 +168,10 @@ if(window.FileReader) {
 							wizard.jumpTo(5);
 						}
 					};
+					$(body).text("Please wait (Importing " + tids.length + " tiddlers)");
 					for(var i = 0; i < tids.length; i++) {
 						var tid = tids[i];
+						$(body).text("Please wait (Importing " + tid.title + ")");
 						saveFunction(tid, complete);
 					}
 				},
