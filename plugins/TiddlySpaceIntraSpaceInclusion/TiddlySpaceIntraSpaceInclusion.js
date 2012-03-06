@@ -40,7 +40,8 @@
 			if(tidtitle && space && !store.getTiddler(newtitle)) {
 				var tiddler = new Tiddler(title);
 				// get the tiddler, where the macro is rendered. //XXX will need more testing
-				var refreshTitle = story.findContainingTiddler(place).getAttribute('tiddler');;
+				var el = story.findContainingTiddler(place);
+				var refreshTitle = (el) ? el.getAttribute('tiddler') : null;
 
 				tiddler.text = "//retrieving from server//";
 				tiddler.fields.doNotSave = "true";
