@@ -3,7 +3,7 @@
 |''Description:''|Provides support for {{{<<tiddler Foo@bar>>}}} and {{{<<tiddler [[Foo]]@bar>>}}}|
 |''Author:''|Jon Robson|
 |''Source:''|https://github.com/jdlrobson/TiddlyWikiPlugins/raw/master/plugins/TiddlySpaceIntraSpaceInclusion/TiddlySpaceIntraSpaceInclusion.js|
-|''Version:''|0.3.6MP2|
+|''Version:''|0.3.7|
 |''License:''|[[BSD License|http://www.opensource.org/licenses/bsd-license.php]] |
 |''Comments:''|Please make comments at http://groups.google.co.uk/group/TiddlyWikiDev |
 |''~CoreVersion:''|2.4|
