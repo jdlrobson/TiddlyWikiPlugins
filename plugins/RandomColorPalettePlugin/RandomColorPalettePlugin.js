@@ -69,7 +69,9 @@ function HSL_TO_RGB(h, s, l) { // h (hue) between 0 and 360, s (saturation) & l 
 		handler: function(place, macroName, params, wikifier, paramString, tiddler) {
 			paramString = paramString || "";
 			var options = macro.getOptions(paramString);
+			temporary = paramString.indexOf('temporary')>=0;
 			macro.generatePalette(options, true);
+			if(temporary && readOnly)store.setDirty(false);
 		},
 		optionTypes: {
 			floats: ["hue", "saturation", "darkest", "lightness", "huevariance", "dark", "pale", "light", "mid",
@@ -213,7 +215,7 @@ function HSL_TO_RGB(h, s, l) { // h (hue) between 0 and 360, s (saturation) & l 
 				window.clearTimeout(macro._nextSave);
 			}
 			macro._nextSave = window.setTimeout(function() {
-					autoSaveChanges(null, [tid]);
+					if(!readOnly)autoSaveChanges(null, [tid]);
 				}, 2000);
 			// temporary workaround for IE.
 			$.twStylesheet.remove({ id: "StyleSheetColors" });
